@@ -26,11 +26,10 @@ export const AuthProvider = ({children}) => {
             const res = await registerRequest(user);
             console.log(res.data);
             setUser(res.data);
-            setAuthenticated(true);
+            setIsAuthenticated(true); // Cambiar a setIsAuthenticated
+            setLoading(false);
         }catch(error){
-            //console.log(error.response.data)
             setErrors(error.response.data);
-
         }
     };
 
@@ -77,13 +76,13 @@ export const AuthProvider = ({children}) => {
         async function checkLogin(){
             const cookies = Cookies.get();
 
-        if(!cookies.token){
-            setIsAuthenticated(false);
-            setLoading(false);
-            return setUser(null);
-        }
+            if(!cookies.token){
+                setIsAuthenticated(false);
+                setLoading(false);
+                return setUser(null);
+            }
             try{
-                const res = await verifyTokenRequest(cookies.token);
+                const res = await verifyTokenRequest();
                 if(!res.data) {
                     setIsAuthenticated(false)
                     setLoading(false);  
@@ -101,8 +100,6 @@ export const AuthProvider = ({children}) => {
             }
         }
         checkLogin();
-
-
     },[])
     
 

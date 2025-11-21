@@ -70,10 +70,9 @@ function LoginPage() {
     signin(data);
   });
 
-  useEffect(()=>{
-    if(isAuthenticated) navigate("/tasks")  
- 
-  }, [isAuthenticated])
+  useEffect(() => {
+    if (isAuthenticated) navigate("/menu"); 
+  }, [isAuthenticated]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#111c1f] relative overflow-hidden">

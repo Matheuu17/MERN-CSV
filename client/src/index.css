@@ -1,6 +1,33 @@
 @import "tailwindcss";
 
-body{
-    background: #202020;
-    color: white;
+body {
+  background: #202020;
+  color: white;
+}
+
+@layer utilities {
+  /* Estilo base del Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px; 
+    height: 8px;
+  }
+
+  /* El fondo (riel) */
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #142024;
+    border-radius: 4px;
+  }
+
+  /* La barra (thumb) */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #374151; /* Gris oscuro por defecto */
+    border-radius: 4px;
+    border: 1px solid #1f2937; /* Borde sutil */
+  }
+
+  /* La barra al pasar el mouse (Hover) */
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #19bfff; /* ¡Tu azul Neón! */
+    box-shadow: 0 0 10px #19bfff; /* Efecto de brillo */
+  }
 }

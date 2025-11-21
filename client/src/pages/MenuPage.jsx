@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaSignOutAlt } from 'react-icons/fa';
+import { FaSearch, FaSignOutAlt, FaHistory } from 'react-icons/fa'; // Agregamos FaHistory
 import { useAuth } from '../context/AuthContext';
 
 function MenuPage() {
@@ -81,20 +81,31 @@ function MenuPage() {
         </div>
       </div>
 
-      {/* Contenido central */}
+      {/* Contenido central con los botones */}
       <div className="flex flex-1 items-center justify-center relative z-10">
         <div className="flex flex-col items-center gap-5">
           <span className="text-gray-500 text-center mb-2">System Access</span>
+          
+          {/* Botón 1: Nueva Búsqueda */}
           <Link
-            to="/algoritmo"
+            to="/add-task"
             className="flex items-center justify-center gap-3 bg-[#19BFFF] hover:bg-[#15A9E6] text-black font-semibold py-3 px-8 rounded-md text-lg w-80 transition-colors"
           >
-            <FaSearch /> Buscar Dato
+            <FaSearch /> Nueva Búsqueda
           </Link>
+
+          {/* Botón 2: Ver Historial (NUEVO) */}
+          <Link
+            to="/tasks"
+            className="flex items-center justify-center gap-3 bg-[#1b2730] border border-[#19BFFF] hover:bg-[#22313a] text-[#19BFFF] font-semibold py-3 px-8 rounded-md text-lg w-80 transition-colors"
+          >
+            <FaHistory /> Ver Historial
+          </Link>
+
+          {/* Botón 3: Cerrar Sesión */}
           <button
             className="flex items-center justify-center gap-2 bg-[#232b30] hover:bg-[#344148] text-white font-semibold py-3 px-8 rounded-md text-lg w-80 transition-colors"
             onClick={() => {
-              // Aquí puedes poner tu lógica de logout
               logout();
               window.location = "/login";
             }}

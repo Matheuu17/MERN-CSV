@@ -8,7 +8,6 @@ import TaskFormPage from './pages/TaskFormPage';
 
 import ProtectedRoute from './ProtectedRoute';
 import TasksPage from './pages/TaskPage';
-import ProfilePage from './pages/ProfilePage';
 import { TaskProvider } from './context/TasksContext';
 import Navbar from './components/Navbar';
 
@@ -31,7 +30,6 @@ function App(){
               <Route path='/tasks' element={<TasksPage/>}/>
               <Route path='/add-task' element={<TaskFormPage/>}/>
               <Route path='/tasks/:id' element={<TaskFormPage/>}/>
-              <Route path='/profile' element={<ProfilePage/>}/>
 
             </Route>
         
