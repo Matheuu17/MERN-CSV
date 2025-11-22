@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import axios from "../api/axios";
 
+// Formulario de busqueda: subir CSV, elegir algoritmo y ejecutar
+// Muestra resultados abajo cuando se obtienen coincidencias
 function TaskFormPage() {
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ function TaskFormPage() {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState(null);
 
+  // handleReset: limpia campos del form, resultados y mensaje
   const handleReset = () => {
     setResultados([]);
     setMensaje(null);
@@ -69,6 +72,7 @@ function TaskFormPage() {
 
   const onSubmit = handleSubmit(async (data) => {
     const file = fileInputRef.current.files[0];
+    // Valida que se haya seleccionado un archivo CSV
     if (!file) {
       alert("Debes seleccionar un archivo CSV.");
       return;
@@ -85,6 +89,7 @@ function TaskFormPage() {
     // Enviamos el valor del toggle (true/false)
     formData.append("allowOverlap", data.allowOverlap);
 
+    // onSubmit: crea FormData, la envia al endpoint y procesa la respuesta
     try {
       const res = await axios.post("/search/upload-csv", formData, {
         headers: { "Content-Type": "multipart/form-data" },

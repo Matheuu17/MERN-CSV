@@ -17,12 +17,14 @@ function App(){
     <AuthProvider>
       <TaskProvider>
         <BrowserRouter>
+            {/* Navbar visible en todas las paginas */}
             <Navbar/>
           <Routes>
             <Route path='/' element={<HomePage /> }/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/register' element={<RegisterPage/>}/>
 
+            {/* Rutas protegidas: requieren autenticacion (ProtectedRoute) */}
             <Route element={<ProtectedRoute/>}> 
               <Route path='/menu' element={<MenuPage/>}/>
   

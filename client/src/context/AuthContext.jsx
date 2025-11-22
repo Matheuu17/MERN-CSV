@@ -2,10 +2,11 @@ import {createContext, useState, useContext, useEffect } from "react";
 import {registerRequest, loginRequest, verifyTokenRequest} from '../api/auth';
 import Cookies from "js-cookie";
 
-
+// Contexto de autenticacion, que maneja el user, estado de login y errores
 export const AuthContext = createContext();
 
 export const useAuth =() => {
+    // Se declara en constante para acceder al contexto facilmente desde componentes
     const context = useContext(AuthContext);
 
     if(!context){
@@ -21,18 +22,20 @@ export const AuthProvider = ({children}) => {
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Registrar usuario y actualizar estado
     const signup = async (user) => {
         try{
             const res = await registerRequest(user);
             console.log(res.data);
             setUser(res.data);
-            setIsAuthenticated(true); // Cambiar a setIsAuthenticated
+            setIsAuthenticated(true);
             setLoading(false);
         }catch(error){
             setErrors(error.response.data);
         }
     };
 
+    // Iniciar sesion y guardar usuario
     const signin = async (user) => {
 
         try{
@@ -52,6 +55,7 @@ export const AuthProvider = ({children}) => {
         }
     }
 
+    // Cerrar sesion, que elimina el token localmente y resetea el estado
     const logout = async (user) => {
         try{
             Cookies.remove("token");
@@ -62,6 +66,8 @@ export const AuthProvider = ({children}) => {
             console.log(error)
         }
     }
+
+    // Limpiar errores automaticamente despues de 3s
     useEffect(()=>{
         if(errors.length>0){
             const timer = setTimeout(()=>{
@@ -72,6 +78,7 @@ export const AuthProvider = ({children}) => {
         }
     },[errors])
 
+    // Al montar, verificar si hay cookie/token y validarlo con la API
     useEffect(()=>{
         async function checkLogin(){
             const cookies = Cookies.get();

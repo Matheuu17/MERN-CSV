@@ -6,7 +6,7 @@ body {
 }
 
 @layer utilities {
-  /* Estilo base del Scrollbar */
+  /* Estilo del Scrollbar */
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px; 
     height: 8px;
@@ -18,16 +18,15 @@ body {
     border-radius: 4px;
   }
 
-  /* La barra (thumb) */
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #374151; /* Gris oscuro por defecto */
+    background: #374151;
     border-radius: 4px;
-    border: 1px solid #1f2937; /* Borde sutil */
+    border: 1px solid #1f2937;
   }
 
   /* La barra al pasar el mouse (Hover) */
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #19bfff; /* ¡Tu azul Neón! */
+    background: #19bfff; 
     box-shadow: 0 0 10px #19bfff; /* Efecto de brillo */
   }
 }

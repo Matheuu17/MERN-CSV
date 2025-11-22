@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 
+// Pagina de inicio: bienvenida y enlaces a login/register
 function HomePage() {
   const bgRef = useRef(null);
 
@@ -19,10 +20,14 @@ function HomePage() {
         this.speed = Math.random() * 3 + 1;
         this.opacity = 0.1 + Math.random() * 0.2;
       }
+
+      // Mueve la linea hacia arriba y reinicia su posicion al salir
       update() {
         this.y -= this.speed;
         if (this.y < 0) this.y = height;
       }
+      
+      // Dibuja la linea en el canvas con la opacidad dada
       draw() {
         ctx.strokeStyle = `rgba(25, 191, 255, ${this.opacity})`;
         ctx.beginPath();
@@ -36,6 +41,7 @@ function HomePage() {
       lines.push(new Line());
     }
 
+    // Loop de animacion, que actualiza y dibuja todas las lineas continuamente
     function animate() {
       ctx.clearRect(0, 0, width, height);
       lines.forEach(line => {
@@ -47,6 +53,7 @@ function HomePage() {
 
     animate();
 
+    // Ajusta el canvas cuando cambia el tamano de la ventana
     function handleResize() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;

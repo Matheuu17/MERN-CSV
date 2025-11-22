@@ -1,0 +1,5 @@
+# Ignora todo en esta carpeta (archivos subidos)
+*
+# Pero permite mantener el .gitignore y .gitkeep para conservar la carpeta vacia en el repo
+!.gitignore
+!.gitkeep

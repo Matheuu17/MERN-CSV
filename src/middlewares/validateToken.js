@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
 
+// authRequired: middleware que verifica cookie JWT y añade req.user
 export const authRequired = (req, res, next) => {
     const { token } = req.cookies;
     if (!token) return res.status(401).json({ message: "Access denied. No token provided." });
@@ -8,8 +9,7 @@ export const authRequired = (req, res, next) => {
     jwt.verify(token, TOKEN_SECRET, (err, user) => {
         if (err) return res.status(401).json({ message: "Invalid token." });
 
-        req.user = user;
-
+        req.user = user; // payload del token
         next();
     });
 }

@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useTasks } from "../context/TasksContext";
 
+// Historial de busquedas: agrupa por fecha/patron/algoritmo y muestra resultados
+// Nota: se agrupa y luego se ordena para mostrar lo mas reciente primero
+
 function TasksPage() {
   const { getTasks, tasks } = useTasks();
   const bgRef = useRef(null);
@@ -9,9 +12,13 @@ function TasksPage() {
     getTasks();
   }, []);
 
-  // --- Lógica de Agrupación ---
+  // --- Logica de agrupacion ---
+  /*reduce: crea un objeto agrupado por fecha-search-algorithm
+    cada key representa una ejecucion
+    meta guarda una tarea representativa
+    results es la lista de tareas pertenecientes a ese grupo */
   const groupedTasks = tasks.reduce((acc, task) => {
-    // Agrupamos por fecha exacta, patrón y algoritmo
+    // Agrupamos por fecha exacta, patron y algoritmo
     const dateKey = new Date(task.date).toLocaleString(); 
     const key = `${dateKey}-${task.searchData}-${task.algorithm}`;
 
@@ -25,7 +32,7 @@ function TasksPage() {
     return acc;
   }, {});
 
-  // Ordenar por fecha descendente (lo más reciente primero)
+  // Ordena grupos por fecha descendente (lo mas reciente primero)
   const historyList = Object.values(groupedTasks).sort((a,b) => new Date(b.meta.date) - new Date(a.meta.date));
 
   // --- Efecto Canvas ---
@@ -84,7 +91,7 @@ function TasksPage() {
         <div className="grid grid-cols-1 gap-6">
             {historyList.map((group, index) => (
                 <div key={index} className="bg-[#142024] rounded-xl shadow-lg p-6 border border-[#339DFF] hover:shadow-[#19BFFF]/20 transition-shadow">
-                    {/* Encabezado de la Búsqueda */}
+                    {/* Encabezado de la Busqueda */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 border-b border-gray-700 pb-4">
                         <div>
                             <h3 className="text-xl text-[#19BFFF] font-bold">
@@ -95,7 +102,7 @@ function TasksPage() {
                                 <span className="hidden md:inline">|</span>
                                 <span>Algoritmo: <span className="text-white font-semibold">{group.meta.algorithm}</span></span>
                                 <span className="hidden md:inline">|</span>
-                                {/* AQUI MOSTRAMOS EL SOLAPAMIENTO */}
+                                {/* Para el solapamiento */}
                                 <span className={`px-2 py-0.5 rounded text-xs font-bold ${group.meta.allowOverlap ? "bg-green-900 text-green-300" : "bg-yellow-900 text-yellow-300"}`}>
                                     {group.meta.allowOverlap ? "Con Solapamiento" : "Sin Solapamiento"}
                                 </span>

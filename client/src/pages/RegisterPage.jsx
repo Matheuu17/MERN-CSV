@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+// Pagina de registro: crear cuenta y redirigir si ya esta autenticado
 function RegisterPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
@@ -13,6 +14,7 @@ function RegisterPage() {
     if (isAuthenticated) navigate('/menu');
   }, [isAuthenticated, navigate]);
 
+  // onSubmit: envia datos del formulario al contexto para crear cuenta
   useEffect(() => {
     const canvas = bgRef.current;
     const ctx = canvas.getContext('2d');
@@ -100,7 +102,6 @@ function RegisterPage() {
             {errors.username && (<p className='text-red-500'>Username is required</p>)}
           </div>
 
-          {/* Canal de Comunicación Seguro */}
           <div>
             <label className="text-white font-semibold mb-1 block">Canal de Comunicación Seguro</label>
             <input

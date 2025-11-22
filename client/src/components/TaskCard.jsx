@@ -1,6 +1,6 @@
 import { useTasks } from "../context/TasksContext";
 
-
+// Tarjeta de tarea: muestra datos y permite borrar.
 function TaskCard({ task }) {
   const { deleteTask } = useTasks();
 

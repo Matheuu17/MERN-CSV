@@ -11,16 +11,12 @@ const __dirname = path.dirname(__filename);
 
 const router = Router();
 
-// Configuración robusta de Multer
-// 1. Guarda en la carpeta uploads
-// 2. Mantiene la extensión .csv (importante para que sea legible)
+// Multer: guarda uploads en la carpeta uploads/ y mantiene extension
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // __dirname está en /src/routes, subimos 2 niveles (../../) para llegar a uploads en la raíz
         cb(null, path.join(__dirname, '../../uploads/'));
     },
     filename: function (req, file, cb) {
-        // Genera nombre único: file-fecha-random.csv
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
     }
@@ -28,11 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// RUTA POST PROTEGIDA
-// Orden de ejecución: 
-// 1. authRequired (¿Está logueado? -> Si sí, llena req.user)
-// 2. upload.single (Sube el archivo)
-// 3. uploadCsvController (Ejecuta C++ y guarda en BD usando req.user)
+// Ruta POST protegida que primero verifica auth, luego sube archivo y luego procesa
 router.post('/upload-csv', authRequired, upload.single('file'), uploadCsvController);
 
 export default router;

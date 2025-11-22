@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// Schema para validar la creacion de una tarea desde el backend
 export const createTaskSchema = z.object({
   searchData: z.string({
     required_error: "El dato solicitado es requerido"

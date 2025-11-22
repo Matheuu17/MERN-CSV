@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// Schemas para validar datos de autenticacion (register y login)
 export const registerSchema = z.object({
     username: z.string({
         required_error: "Username is required",

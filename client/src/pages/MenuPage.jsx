@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaSearch, FaSignOutAlt, FaHistory } from 'react-icons/fa'; // Agregamos FaHistory
 import { useAuth } from '../context/AuthContext';
 
+// Menu principal: accesos rapidos a buscar, historial y cerrar sesion
 function MenuPage() {
   const bgRef = useRef(null);
   const { user, logout } = useAuth();
@@ -75,6 +76,7 @@ function MenuPage() {
           <span className="text-white font-bold text-lg">Proyecto Enigma</span>
         </div>
         <div>
+          {/* Muestra nombre de usuario si existe, si no muestra 'Desconocido' */}
           <span className="bg-[#232b30] px-4 py-2 rounded-lg text-white font-semibold text-sm">
             Agent: {user ? (user.username || user.email || user.id) : "Desconocido"}
           </span>
@@ -86,7 +88,7 @@ function MenuPage() {
         <div className="flex flex-col items-center gap-5">
           <span className="text-gray-500 text-center mb-2">System Access</span>
           
-          {/* Botón 1: Nueva Búsqueda */}
+          {/* Boton 1: Nueva Búsqueda */}
           <Link
             to="/add-task"
             className="flex items-center justify-center gap-3 bg-[#19BFFF] hover:bg-[#15A9E6] text-black font-semibold py-3 px-8 rounded-md text-lg w-80 transition-colors"
@@ -94,7 +96,7 @@ function MenuPage() {
             <FaSearch /> Nueva Búsqueda
           </Link>
 
-          {/* Botón 2: Ver Historial (NUEVO) */}
+          {/* Boton 2: Ver Historial */}
           <Link
             to="/tasks"
             className="flex items-center justify-center gap-3 bg-[#1b2730] border border-[#19BFFF] hover:bg-[#22313a] text-[#19BFFF] font-semibold py-3 px-8 rounded-md text-lg w-80 transition-colors"
@@ -102,7 +104,7 @@ function MenuPage() {
             <FaHistory /> Ver Historial
           </Link>
 
-          {/* Botón 3: Cerrar Sesión */}
+          {/* Boton 3: Al hacer logout, limpia sesion y redirige a la pantalla de login */}
           <button
             className="flex items-center justify-center gap-2 bg-[#232b30] hover:bg-[#344148] text-white font-semibold py-3 px-8 rounded-md text-lg w-80 transition-colors"
             onClick={() => {
@@ -110,7 +112,7 @@ function MenuPage() {
               window.location = "/login";
             }}
           >
-            <FaSignOutAlt /> Cerrar Sesión
+            <FaSignOutAlt /> Cerrar Sesion
           </button>
         </div>
       </div>

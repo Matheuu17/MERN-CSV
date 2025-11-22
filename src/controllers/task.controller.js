@@ -1,6 +1,8 @@
 import Task from '../models/task.model.js';
 
-// Obtener tareas del usuario
+// Controllers de tareas (CRUD)
+
+// getTasks: devuelve todas las tareas del usuario logueado
 export const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id }).populate('user');
@@ -10,17 +12,11 @@ export const getTasks = async (req, res) => {
   }
 };
 
-// Crear nueva tarea (búsqueda)
+// createTask: guarda una nueva tarea en la BD
 export const createTask = async (req, res) => {
   try {
     const { searchData, algorithm, executionTime, date } = req.body;
-    const newTask = new Task({
-      searchData,
-      algorithm,
-      executionTime,
-      date,
-      user: req.user.id
-    });
+    const newTask = new Task({ searchData, algorithm, executionTime, date, user: req.user.id });
     const saveTask = await newTask.save();
     res.json(saveTask);
   } catch (error) {
@@ -28,7 +24,7 @@ export const createTask = async (req, res) => {
   }
 };
 
-// Obtener una tarea específica
+// getTask: devuelve una tarea por id
 export const getTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id).populate('user');
@@ -39,7 +35,7 @@ export const getTask = async (req, res) => {
   }
 };
 
-// Eliminar tarea
+// deleteTask: elimina una tarea por id
 export const deleteTask = async (req, res) => {
   try {
     const task = await Task.findByIdAndDelete(req.params.id);
@@ -50,12 +46,10 @@ export const deleteTask = async (req, res) => {
   }
 };
 
-// Actualizar tarea
+// updateTask: actualiza campos de una tarea
 export const updateTask = async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
-    });
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!task) return res.status(404).json({ message: "Task not found" });
     res.json(task);
   } catch (error) {

@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 
+// Pagina de login: formulario de acceso y redireccion si ya esta logueado
 function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signin, errors: signinErrors, isAuthenticated } = useAuth();
@@ -26,10 +27,14 @@ function LoginPage() {
         this.speed = Math.random() * 2 + 1;  // velocidad aumentada para efecto
         this.opacity = 0.1 + Math.random() * 0.2;
       }
+
+      // Mueve la linea y reinicia si sale de la pantalla
       update() {
         this.y -= this.speed;
         if (this.y < 0) this.y = height;
       }
+
+      // Dibuja la linea en el canvas
       draw() {
         ctx.strokeStyle = `rgba(25, 191, 255, ${this.opacity})`;
         ctx.beginPath();
@@ -70,6 +75,7 @@ function LoginPage() {
     signin(data);
   });
 
+  // Si el usuario ya esta autenticado, redirige al menu
   useEffect(() => {
     if (isAuthenticated) navigate("/menu"); 
   }, [isAuthenticated]);
@@ -102,9 +108,6 @@ function LoginPage() {
 
 
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
-
-
-          {/* Canal de Comunicación Seguro */}
           <div>
             <label className="text-white font-semibold mb-1 block">Canal de Comunicación Seguro</label>
             <div className="relative">
@@ -133,8 +136,8 @@ function LoginPage() {
               <input
                 type="password"
                 {...register('password', {
-                  required: 'Password is required',
-                  minLength: { value: 6, message: 'Password must be at least 6 characters' }
+                  required: 'Se requiere la clave',
+                  minLength: { value: 6, message: 'La clave debe tener almenos 6 caracteres' }
                 })}
                 className="w-full bg-[#1b2730] text-white placeholder-gray-400 px-4 py-3 pr-12 rounded-md focus:outline-none focus:ring-2 focus:ring-[#339DFF] transition"
                 placeholder="Introduce tu contraseña"
